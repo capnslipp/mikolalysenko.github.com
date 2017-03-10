@@ -101,7 +101,7 @@
 		  //Downsample volume
 		  var field = testdata[ document.getElementById("datasource").value ]()
 		    , num_iters = parseInt(document.getElementById('resolution').value, 10)
-		    , filter = filters[ document.getElementById("filters").value ]
+		    , filter = simplifiers[ document.getElementById("filters").value ]
 		    , min_dim = Math.min(field.dims[0], Math.min(field.dims[1], field.dims[2]));
 		  
 	    if((1 << num_iters) >= min_dim) {
@@ -232,7 +232,7 @@
 			}
 			ds.onchange = updateMesh;
 			var ms = document.getElementById("filters");
-			for(var alg in filters) {
+			for(var alg in simplifiers) {
 			  ms.add(new Option(alg, alg), null);
 			}
 			ms.onchange = updateMesh;
