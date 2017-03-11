@@ -30,10 +30,16 @@ void main (void) {
 
 <script >
 
+require.load({ id: 'dualcontour', url: './js/dualcontour.js' });
+require.load({ id: 'events', url: './js/events.js' });
+require.load({ id: 'perlinnoise', url: './js/perlinnoise.js' });
+require.load({ id: 'testdata', url: './js/testdata.js' });
+require.load({ id: 'webgl', url: './js/webgl.js' });
+
 (function() {
 "use strict";
 
-var webgl = require('./js/webgl.js');
+var webgl = require('webgl');
 webgl.once('init', function() {
 
   

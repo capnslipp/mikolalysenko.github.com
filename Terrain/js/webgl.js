@@ -1,7 +1,7 @@
 "use strict";
 
 //Retrieve event emitter
-var EventEmitter = require('./events.js').EventEmitter;
+var EventEmitter = require('events').EventEmitter;
 module.exports = new EventEmitter();
 
 exports.gl = null;
@@ -239,7 +239,7 @@ function Shader(vertex_shader, fragment_shader) {
     addUniform(this, program, p, uniforms[p]);
   }
   for(var p in attributes) {
-    addAttribute(this, program p, attributes[p]);
+    addAttribute(this, program, p, attributes[p]);
   }
   
   exports.emit("shader", this);
