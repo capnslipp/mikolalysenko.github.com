@@ -51,6 +51,6 @@ function StupidMesh(volume, dims) {
 }
 
 
-if(exports) {
+if(typeof exports !== "undefined") {
   exports.mesher = StupidMesh;
 }

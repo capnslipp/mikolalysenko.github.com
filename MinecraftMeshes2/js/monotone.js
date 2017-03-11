@@ -268,6 +268,6 @@ return function(volume, dims) {
 }
 })();
 
-if(exports) {
+if(typeof exports !== "undefined") {
   exports.mesher = MonotoneMesh;
 }
