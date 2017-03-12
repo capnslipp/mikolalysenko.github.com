@@ -46,6 +46,7 @@
 	    <p>Show faces: <input type="checkbox" id="showfacets" value="checked" /></p>
 	    <p>Show edges: <input type="checkbox" id="showedges" value="checked" /></p>
 	    <p>Dark edges: <input type="checkbox" id="darkwires" value="" /></p>
+	    <p>Use lighting: <input type="checkbox" id="uselighting" value="checked" /></p>
 	    <p>Vertex count: <input type="text" id="vertcount" value="0" /> </p>	    	
 	    <p>Face count: <input type="text" id="facecount" value="0" /> </p>	    	
 	  </div> 
@@ -62,6 +63,7 @@
 		  , 'Monotone': MonotoneMesh
 		};
 		var testdata = {};
+		var ambientLight, dirLight;
 		
 		var wirematerial;
 		function wirematerialColor() {
@@ -117,9 +119,13 @@
 
       
        //Create surface mesh
-			var material	= new THREE.MeshBasicMaterial({
-		    vertexColors: true
-			});
+			var material = (function(){
+				if (document.getElementById("uselighting").checked) {
+					return new THREE.MeshPhongMaterial({ vertexColors: true });
+				} else {
+					return new THREE.MeshBasicMaterial({ vertexColors: true });
+				}
+			})()
 			surfacemesh	= new THREE.Mesh( geometry, material );
 			surfacemesh.doubleSided = false;
 			wirematerial = new THREE.MeshBasicMaterial({
@@ -181,6 +187,18 @@
 				THREEx.FullScreen.bindKey();		
 				document.getElementById('inlineDoc').innerHTML	+= "- <i>f</i> for fullscreen";
 			}
+			
+			
+			ambientLight = (function(){
+				var light = new THREE.AmbientLight();
+				light.color = new THREE.Color(0x3D5166);
+				return light;
+			})()
+			dirLight = (function(){
+				var light = new THREE.DirectionalLight(0xFFFFF2, 1.25);
+				light.position.set(20, 32, 40)
+				return light;
+			})()
 
       
 			//Initialize dom elements
@@ -200,6 +218,24 @@
 			darkwiresCheckbox = document.getElementById("darkwires");
 			darkwiresCheckbox.onchange = function(){
 				wirematerial.color = wirematerialColor();
+			};
+			
+			uselightingCheckbox = document.getElementById("uselighting");
+			uselightingCheckbox.checked = true;
+			if (uselightingCheckbox.checked) {
+				scene.add(ambientLight);
+				scene.add(dirLight);
+			}
+			uselightingCheckbox.onchange = function(event){
+				if (event.target.checked) {
+					scene.add(ambientLight);
+					scene.add(dirLight);
+				} else {
+					scene.remove(ambientLight);
+					scene.remove(dirLight);
+				}
+				
+				updateMesh();
 			};
 			
 			document.getElementById("showfacets").checked = true;
