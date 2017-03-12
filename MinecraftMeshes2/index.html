@@ -194,6 +194,7 @@
 			for(var alg in meshers) {
 			  ms.add(new Option(alg, alg), null);
 			}
+			ms.selectedIndex = Object.keys(meshers).indexOf("Greedy")
 			ms.onchange = updateMesh;
 			
 			darkwiresCheckbox = document.getElementById("darkwires");
