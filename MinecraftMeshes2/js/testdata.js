@@ -182,6 +182,12 @@ function createTestData() {
   });
   
   result['Empty'] = { voxels : [], dims : [0,0,0] };
+  
+  function addJSONModel(name) {
+    result[name] = function(){
+      return $.get({ url: 'models/'+name+'.json', async: false, dataType: "json", }).responseJSON;
+    }
+  }
 
   return result;
 }

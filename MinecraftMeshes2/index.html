@@ -15,6 +15,7 @@
 		<script src="vendor/threex/THREEx.WindowResize.js"></script>
 		<script src="vendor/threex.dragpancontrols.js"></script>
 
+		<script src="vendor/jquery.js"></script>
 
     <!--Mesh algorithms-->
     <script src="js/stupid.js"></script>
@@ -68,9 +69,10 @@
 		  scene.remove( wiremesh );
 		  
 			geometry	= new THREE.Geometry();		
-		  var mesher = meshers[ document.getElementById("mesher").value ]
-		    , data   = testdata[ document.getElementById("datasource").value ]
-        , result = mesher( data.voxels, data.dims );
+			var mesher = meshers[ document.getElementById("mesher").value ];
+			var data   = testdata[ document.getElementById("datasource").value ];
+			if (typeof data === 'function') { data = data(); }
+			var result = mesher( data.voxels, data.dims );
       document.getElementById("vertcount").value = result.vertices.length;
       document.getElementById("facecount").value = result.faces.length;
       geometry.vertices.length = 0;
