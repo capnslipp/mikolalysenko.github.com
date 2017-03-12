@@ -188,6 +188,10 @@ function createTestData() {
       return $.get({ url: 'models/'+name+'.json', async: false, dataType: "json", }).responseJSON;
     }
   }
+  
+  addJSONModel('ship_1');
+  addJSONModel('ship_1.1');
+  addJSONModel('ship_1.2');
 
   return result;
 }
