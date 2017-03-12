@@ -45,6 +45,7 @@
 	    <p><select id="mesher"></select></p>
 	    <p>Show faces: <input type="checkbox" id="showfacets" value="checked" /></p>
 	    <p>Show edges: <input type="checkbox" id="showedges" value="checked" /></p>
+	    <p>Dark edges: <input type="checkbox" id="darkwires" value="" /></p>
 	    <p>Vertex count: <input type="text" id="vertcount" value="0" /> </p>	    	
 	    <p>Face count: <input type="text" id="facecount" value="0" /> </p>	    	
 	  </div> 
@@ -61,6 +62,13 @@
 		  , 'Monotone': MonotoneMesh
 		};
 		var testdata = {};
+		
+		var wirematerial;
+		function wirematerialColor() {
+			return new THREE.Color(
+				document.getElementById("darkwires").checked ? 0x000000 : 0xffffff
+			);
+		}
 		
 		
 		function updateMesh() {
@@ -114,10 +122,10 @@
 			});
 			surfacemesh	= new THREE.Mesh( geometry, material );
 			surfacemesh.doubleSided = false;
-			var wirematerial = new THREE.MeshBasicMaterial({
-			    color : 0xffffff
-			  , wireframe : true
+			wirematerial = new THREE.MeshBasicMaterial({
+			  wireframe : true
 			});
+			wirematerial.color = wirematerialColor();
 			wiremesh = new THREE.Mesh(geometry, wirematerial);
 			wiremesh.doubleSided = true;
 			
@@ -188,8 +196,14 @@
 			}
 			ms.onchange = updateMesh;
 			
+			darkwiresCheckbox = document.getElementById("darkwires");
+			darkwiresCheckbox.onchange = function(){
+				wirematerial.color = wirematerialColor();
+			};
+			
 			document.getElementById("showfacets").checked = true;
 			document.getElementById("showedges").checked  = true;
+			document.getElementById("darkwires").checked = false;
 			
 			//Update mesh
 			updateMesh();
