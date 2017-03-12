@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-var GreedyMesh = (function() {
+var GreedyTriMesh = (function() {
 //Cache buffer internally
 var mask = new Int32Array(4096);
 
@@ -117,5 +117,5 @@ return function(volume, dims) {
 })();
 
 if(typeof exports !== "undefined") {
-  exports.mesher = GreedyMesh;
+  exports.mesher = GreedyTriMesh;
 }
